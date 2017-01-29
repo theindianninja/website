@@ -1,0 +1,752 @@
+<html>
+<head>
+  <title>MFOLD</title>
+ </head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+
+<script>
+
+$(document).ready(function(){   
+    cleanit = setInterval ( "cleaning()", 500 );
+});
+
+function cleaning(){
+    if($('#frametest').contents().find('.selector').html() == "somthing"){
+        clearInterval(cleanit);
+        $('#selector').contents().find('.Link').html('ideate tech');
+    }
+}
+
+</script>
+
+
+<script>
+	function getElement(){
+		var iframe = document.getElementById('frametest');
+		var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+		var div = innerDoc.getElementById('UNAFold-header');
+		div.innerHTML= '<p>HEY</p>';
+		console.log("hey");
+		console.log(innerDoc);
+		console.log(div);
+	}
+	
+	function changeFrame1() {
+		div = document.getElementById("frametest").contentWindow.location.href;
+		div1 = div.split('/');
+		var iframe = document.getElementById('frametest');
+		hey = 'http://yeshymanoharan.com/mfold/iframe_page2.php?argument1='+div1[3]+'&argument2='+div1[4]+'&argument3='+div1[5];
+		console.log(hey);
+		iframe.src = hey;	
+	}
+	
+	function changeFrame() {
+		div = document.getElementById("frametest").contentWindow.location.href;
+		div1 = div.split('/');
+		//alert(div1[3]+"/"+div1[4]);
+		//alert(div1[3]+div1[4]+div1[5]+div1[6]);
+		var div2 = div1[4].split('?');
+		var phpPage = div2[1]
+		console.log(div2[0]);
+		if (div2[0] == "iframe_page2.php") {
+			var ctFile = document.getElementById("frametest").contentWindow.document.getElementsByTagName("BODY");
+			console.log(ctFile);
+			document.getElementById('ctfile').innerHTML = ctFile[0].innerText;
+			parseSequence();
+		}
+		if (div1[3].localeCompare("results")==0) {
+		var iframe = document.getElementById('frametest');
+		hey = 'http://yeshymanoharan.com/mfold/iframe_page2.php?argument1='+div1[3]+'&argument2='+div1[4]+'&argument3='+div1[5];
+		console.log(hey);
+		var url = 'http://unafold.rna.albany.edu/'+div1[3]+'/'+div1[4]+'/'+div1[5]+'/';
+		//sdd something here to make a list of urls.
+		var url1 = document.createElement('div');
+	    url1.innerHTML = '<p><a href='+url+' target="_blank">'+url+'</a></p>';
+		
+		document.getElementById('url').appendChild(url1);
+		iframe.src = hey;
+		}
+	}
+	
+	function resetFrame() {
+		var iframe = document.getElementById("frametest");
+		iframe.src = "http://yeshymanoharan.com/mfold/iframe_page.php";
+		check();
+		
+			
+	}
+	function check() {
+		var iframe = document.getElementById("frametest");
+		if(iframe.contentWindow.document.getElementsByName("SEQ_NAME").length == 0)
+		{
+			setTimeout(check, 3000); //this always happens at least once, can be used to throttle processing.
+			console.log('bitch');
+		} else {
+			console.log(iframe.contentWindow.document.getElementsByName("SEQ_NAME"));
+			input();
+		}
+	}
+	
+	function input() {
+		var iframe = document.getElementById("frametest");
+		//iframe.src = "http://yeshymanoharan.com/mfold/iframe_page.php";
+		
+		var forms = iframe.contentWindow.document.forms;
+		forms[1].action = "http://yeshymanoharan.com/mfold/iframe_page1.php";
+		
+		var jobName = document.getElementById("jobName");
+		var sequence = document.getElementById("sequence");
+		var temperature = document.getElementById("temperature");
+		var naconc = document.getElementById("naconcentration");
+		var mgconc = document.getElementById("mgconcentration");
+		
+		var jobName1 = iframe.contentWindow.document.getElementsByName("SEQ_NAME");
+		jobName1[0].value = jobName.value;
+		
+		var sequence1 = iframe.contentWindow.document.getElementsByName("SEQUENCE");
+		sequence1[0].value = sequence.value;
+		
+		var temperature1 = iframe.contentWindow.document.getElementsByName("T");
+		temperature1[0].value = temperature.value;
+		
+		var naconc1 = iframe.contentWindow.document.getElementsByName("NA_CONC");
+		naconc1[0].value = naconc.value;
+		
+		var mgconc1 = iframe.contentWindow.document.getElementsByName("MG_CONC");
+		mgconc1[0].value = mgconc.value;
+		
+		
+		var form = iframe.contentWindow.document.getElementsByName("FOLD");
+		form[0].submit();
+		/*
+		var inputs = iframe.contentWindow.document.getElementsByTagName('input');
+
+for(var i = 0; i < inputs.length; i++) {
+	//alert(inputs[i].type);
+    if(inputs[i].type.toLowerCase() == 'submit') {
+        alert(inputs[i].value);
+    }
+	//inputs[1].click();
+	*/
+//}
+		
+	}
+	
+	function testVals() {
+		var jobName = document.getElementById("jobName");
+		var sequence = document.getElementById("sequence");
+		jobName.value = "job_" + Math.floor(Math.random()*100);
+		sequence.value = randomSequence();
+		input();
+	}
+	
+	function randomSequence() {
+		var text = "";
+    	var possible = "AGCT";
+		
+    	for( var i=0; i < 20; i++ )
+        	text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    	return text;
+	}
+	
+	function createTable(tableData, dGnum) {
+	  var table = document.createElement('table');
+	  var tableBody = document.createElement('tbody');
+	  
+	  tableData.forEach(function(rowData) {
+		var row = document.createElement('tr');
+	
+		rowData.forEach(function(cellData) {
+		  var cell = document.createElement('td');
+		  cell.appendChild(document.createTextNode(cellData));
+		  row.appendChild(cell);
+		});
+	
+		tableBody.appendChild(row);
+	  });
+	
+	  table.appendChild(tableBody);
+	  
+	  var space = document.createElement('div');
+	  space.appendChild(document.createTextNode("---------------"));
+	  var name = document.createElement('div');
+	  name.appendChild(document.createTextNode(sequencesList[iterationNumber-2]));
+	  var dG = document.createElement('div');
+	  dG.appendChild(document.createTextNode(dGnum));
+	  document.getElementById('parsed').appendChild(space);
+	  document.getElementById('parsed').appendChild(name);
+	  document.getElementById('parsed').appendChild(dG);
+	  document.getElementById('parsed').appendChild(table);
+	}
+
+	
+	function parseSequence() {
+		var ctFile = document.getElementById('ctfile');
+		ctFile.innerHTML = ctFile.innerHTML +' ';
+		ctFile1 = ctFile.innerHTML.split('dG');
+		console.log(ctFile1);
+		var max_dG = null;
+		for(ii = 1; ii<ctFile1.length; ii++) {//change this later
+		//alert(ctFile1.length);
+		console.log(ctFile1[ii]);
+		//alert(ii);
+			ctFile2 = ctFile1[ii].split(' ');
+			var sequence = "";
+			var numbering = "";
+			var pairing = "";
+			for(j = 4; j<ctFile2.length-6; j= j+6)
+			{
+				sequence = sequence.concat(ctFile2[j+1]+" ");
+				numbering = numbering.concat(ctFile2[j+5]+" ");
+				pairing = pairing.concat(ctFile2[j+4]+" ");
+			}
+			dG = ctFile2[2];
+			if(max_dG == null) {
+				max_dG = dG;
+			}
+			//alert(ii);
+			//alert(i);
+			//alert(sequence);
+			//alert(numbering);
+			//alert(pairing);
+			var labeling = secondaryStructure(numbering, pairing);
+			//alert(ii);
+			//alert(dG);
+			//alert(max_dG);
+			//alert(max_dG*.95);
+			//alert(-dG >= -max_dG *.95);
+			//note that the simple 5 percent rule only works if dG is negative.
+			if(-dG >= -max_dG *.95 && dG <= 0) {
+				createTable([sequence.split(' '), numbering.split(' '), pairing.split(' '), labeling[0], labeling[1], labeling[3]], dG);
+			}
+			/*
+			var element = document.createElement('div');
+			element.appendChild(document.createTextNode("--------------------------------------------------------"));
+			var element0 = document.createElement('div');
+			element0.appendChild(document.createTextNode("SEQUENCE " + i + ": (dG = " + ctFile2[2]+")"));
+			var element1 = document.createElement('div');
+			element1.appendChild(document.createTextNode(sequence));
+			var element2 = document.createElement('div');
+			element2.appendChild(document.createTextNode(numbering));
+			var element3 = document.createElement('div');
+			element3.appendChild(document.createTextNode(pairing));
+			var element5 = document.createElement('div');
+			element5.appendChild(document.createTextNode(labeling[0]));
+			var element6 = document.createElement('div');
+			element6.appendChild(document.createTextNode(labeling[1]));
+			//console.log(labeling[2]);
+			//var element7 = document.createElement('div');
+			//element7.appendChild(document.createTextNode(labeling[2]));
+			var element8 = document.createElement('div');
+			element8.appendChild(document.createTextNode(labeling[3]));
+			var element4 = document.createElement('div');
+			element4.appendChild(element);
+			element4.appendChild(element0);
+			element4.appendChild(element1);
+			element4.appendChild(element2);
+			element4.appendChild(element3);
+			element4.appendChild(element5);
+			element4.appendChild(element6);
+			//element4.appendChild(element7);
+			element4.appendChild(element8);
+			document.getElementById('parsed').appendChild(element4);
+			//console.log(element4);
+			*/
+			//alert('outofloop5');
+			//alert(ctFile1.length);
+			//alert(ii);
+		}
+		inputMultSequences();
+	}
+	 
+	function secondaryStructure(numbering, pairing) {
+		var length = numbering.length; //I know numbering and pairing have the same length
+		var counter = 0;
+		var labeling = [];
+		var layering = [];
+		layering = layering1(numbering, pairing);
+		//begin min and max array function
+		var oldValPosition = 0;
+		var oldVal = 0;
+		var plusOrMinus;
+		var minandmax = [];
+		for(i = 0; i < layering.length; i++) {
+			if(layering[i] > oldVal) {
+				//alert(i);
+				if(plusOrMinus == null) {
+					plusOrMinus = 'm'; // relative min beginning
+				} else if(plusOrMinus == 1) {
+					plusOrMinus = 1;
+				} else if(plusOrMinus == -1) {
+					plusOrMinus = 'm'; //relative min (nodes)
+				} else if(plusOrMinus == 'm') {
+					plusOrMinus = 1;
+				} else if(plusOrMinus == 'M') {
+					plusOrMinus = 'm';
+				}
+				for(j = oldValPosition; j < i; j++) {
+					minandmax[j] = plusOrMinus;
+				}
+				oldValPosition = i;
+				oldVal = layering[i];
+			} else if(layering[i] < oldVal) {
+				if(plusOrMinus == null) {
+					plusOrMinus = 'M'; //relative max beginning (this never happens);
+				} else if(plusOrMinus == 1) {
+					plusOrMinus = 'M'; //relative max (hairpin)
+				} else if(plusOrMinus == -1) {
+					plusOrMinus = -1;
+				} else if(plusOrMinus == 'm') {
+					plusOrMinus = 'M';
+				} else if(plusOrMinus == 'M') {
+					plusOrMinus = -1;
+				}
+				for(j = oldValPosition; j < i; j++) {
+					minandmax[j] = plusOrMinus;
+				}
+				oldValPosition = i;
+				oldVal = layering[i];
+			} 
+		}
+		
+		for(j = oldValPosition; j < layering.length; j++) {
+			minandmax[j] = 'm'; //local min (don't have to worry about local max bc that never happens.
+		}
+		//end min and max array
+		
+		//find min
+		var triplesArr = [];
+		var initPosition = null;
+		var finalPosition = null;
+		var layerValue = null;
+		var highestVal = 0;
+		for(index = 0; index < minandmax.length; index++) {
+			if(minandmax[index] == 'M') {
+				if(highestVal < layering[index]) {
+					highestVal = layering[index];
+				}
+			}
+			
+			if(minandmax[index] == 'm') {
+				
+				if(initPosition == null) {
+					//console.log(index);
+					initPosition = index;
+				}
+			}
+			else if(initPosition != null) {
+				finalPosition = index-1;
+				layerVal = layering[finalPosition];
+				arr = [layerVal, initPosition, finalPosition]
+				triplesArr[triplesArr.length] = arr;
+				initPosition = null;
+			}
+		}
+		//this last part is to get the end triple
+		finalPosition = minandmax.length-1;//-1
+		layerVal = layering[finalPosition];
+		arr = [layerVal, initPosition, finalPosition]
+		triplesArr[triplesArr.length] = arr;
+		//end find min
+		
+		//find max
+		var triplesArr1 = [];
+		var initPosition = null;
+		var finalPosition = null;
+		var layerValue = null;
+		for(index = 0; index < minandmax.length; index++) {
+			
+			if(minandmax[index] == 'M') {
+				
+				if(initPosition == null) {
+					//console.log(index);
+					initPosition = index;
+				}
+			}
+			else if(initPosition != null) {
+				finalPosition = index-1;
+				layerVal = layering[finalPosition];
+				arr = [layerVal, initPosition, finalPosition]
+				triplesArr1[triplesArr1.length] = arr;
+				initPosition = null;
+			}
+		}
+		//end find max
+		
+		triplesArr.sort(function(a,b){return a[0] < b[0]})
+		console.log(triplesArr);
+		var previousMin;
+		var currentMin;
+		var maxValue;
+		var classified = [];
+		pairing1 = pairing.split(' ');
+			pairing = pairing1;
+		for(i = 0; i < triplesArr.length; i++) {
+			//alert('h'+triplesArr.length+','+i);
+			//so far I have something that checks bottom variables.
+			
+			var arr = triplesArr[i];
+			currentMin = arr[0];
+			j = 0;
+			var maxval = 0;
+			while(arr[1] - 1 - j > 0 && layering[arr[1] -1 - j] != currentMin) {
+				if(layering[arr[1] - 1 - j] > maxval) {
+					maxval = layering[arr[1] - 1 - j];
+				}
+				j++;
+				console.log(j);
+			}
+			console.log("1from"+(arr[1] -j)+"to"+(arr[1]-1));
+			//console.log(pairing.split(' '));
+			//console.log("hey"+currentMin+"hey"+maxval);
+			for(k = maxval; k > currentMin; k--) {
+				var tracker; //location of the first unpaired sequence val.
+				var counter = 0;
+				var coolarr = [];
+				//console.log(k);
+				for(l = arr[1] - j; l <= arr[1]; l++) { //changed < to <=
+					//console.log(l);
+					if(layering[l] == k) {
+						//console.log("hey");
+						if(classified[l] == null) {
+							//console.log(pairing[l]);
+							//console.log("hey");
+							if(pairing[l] != 0) {
+								classified[l] = 'D';
+							} else {
+								coolarr[coolarr.length] = l;
+								if(tracker == null) {
+									tracker = l;
+									counter++;
+								} else {
+									if(tracker + 1 == l) {
+										//do nothing
+										tracker = l;
+									} else {
+										tracker = l;
+										counter++;
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				var previousval= null;
+				var val1 = 0;
+				var val2 = 0;
+				for (n in coolarr) {
+					if(previousval == null) {
+						previousval = coolarr[n];
+						val1++;
+					} else {
+						if(previousval+1 == coolarr[n]) {
+							if(val2 == 0) {
+								val1++;
+							} else {
+								val2++;
+							}
+						} else {
+							val2++;
+						}
+						previousval = coolarr[n];
+					}
+					
+				}
+				
+				
+				for (n in coolarr) {
+					//console.log('n');
+					
+					if(counter == 1) {
+						classified[coolarr[n]] = 'B';
+					} else if(counter == 2) {
+						//console.log(val1+","+val2);
+						if(val1 == val2){
+							
+							
+							classified[coolarr[n]] = 'IS';
+						} else {
+							classified[coolarr[n]] = 'IA';
+						}
+					} else if(counter == 3) {
+						classified[coolarr[n]] = 'M';
+					}
+				}
+			}
+			
+			//console.log(classified);
+			
+			var arr = triplesArr[i];
+			currentMin = arr[0];
+			j = 0;
+			var maxval = 0;
+			while(arr[2] + 1 + j < layering.length && layering[arr[2] +1 + j] != currentMin) {
+				if(layering[arr[2] + 1 + j] > maxval) {
+					maxval = layering[arr[2] + 1 + j];
+				}
+				j++;
+				console.log(j);
+			}
+			//console.log(pairing.split(' '));
+			//console.log("hey"+currentMin+"hey"+maxval);
+			console.log("from"+(arr[2] +1)+"to"+(arr[2]+ j));
+			//alert(maxval);
+			//alert(currentMin);
+			for(k = maxval; k > currentMin; k--) {
+				var tracker; //location of the first unpaired sequence val.
+				var counter = 0;
+				var coolarr = [];
+				//console.log(k);
+				//var val1 = 0;//this one and the bottom are checks for asymmetrical ILs
+				//var val2 = 0;//
+				for(l = arr[2] +1; l <= arr[2]+ j; l++) {
+					//console.log(l+','+val1+','+val2);
+					if(layering[l] == k) {
+						//console.log("hey");
+						if(classified[l] == null) {
+							//console.log(pairing[l]);
+							//console.log("hey");
+							if(pairing[l] != 0) {
+								classified[l] = 'D';
+							} else {
+								coolarr[coolarr.length] = l;
+								if(tracker == null) {
+									tracker = l;
+									counter++;
+									//val1++;
+								} else {
+									if(tracker + 1 == l) {
+										//do nothing
+										//if(val2 != 0) {
+										//	val2++;
+											//alert(l+','+val1+','+val2);
+										//} else {
+										//	val1++;
+											//alert(l+','+val1+','+val2);
+										//}
+										tracker = l;
+									} else {
+										tracker = l;
+										counter++;
+										//val2++;
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				
+				var previousval= null;
+				var val1 = 0;
+				var val2 = 0;
+				for (n in coolarr) {
+					if(previousval == null) {
+						previousval = coolarr[n];
+						val1++;
+					} else {
+						if(previousval+1 == coolarr[n]) {
+							if(val2 == 0) {
+								val1++;
+							} else {
+								val2++;
+							}
+						} else {
+							val2++;
+						}
+						previousval = coolarr[n];
+					}
+					
+				}
+				console.log('>>>>>>>>>>>>>>>>>');
+				console.log(coolarr);
+					console.log(counter);
+				console.log(val1);
+				console.log(val2);
+				console.log('<<<<<<<<<<<<<<<<<');
+				
+				
+				for (n in coolarr) {
+					//console.log('n');
+					
+					if(counter == 1) {
+						classified[coolarr[n]] = 'B';
+					} else if(counter == 2) {
+						//console.log(val1+","+val2);
+						if(val1 == val2){
+							
+							
+							classified[coolarr[n]] = 'IS';
+						} else {
+							classified[coolarr[n]] = 'IA';
+						}
+					} else if(counter == 3) {
+						classified[coolarr[n]] = 'M';
+					}
+				}
+			}
+			//console.log(classified);
+				
+		}
+		 //alert('outofloop');
+		for(i = 0; i <layering.length; i++) {
+			if(layering[i] == 0) {
+				classified[i] = 'S';
+			}
+		}
+		//console.log(classified);
+		//alert('outofloop1');
+		//console.log(triplesArr1);
+		for(i = 0; i < triplesArr1.length; i++) {
+			arr = triplesArr1[i];
+			for(j = arr[1]; j <= arr[2]; j++) {
+				//alert(j);
+				classified[j] = classified[j]+'H';
+			}
+		}
+		//alert('outofloop2');
+		console.log(classified);
+		
+		return [layering, minandmax, triplesArr, classified]
+	}
+	
+	function layering1(numbering, pairing) {
+		var position = -2;
+		var layering = [];
+		var layer = 0;
+		var count = 0;
+		var addTen = 0;
+		pairing = pairing.split(' ');
+		//console.log(pairing);
+		for(i = 0; i < pairing.length - 1; i++) { //pairing.length -1 b/c the array is 1 longer than it needs to be.
+			//console.log(pairing[i]);
+			if(pairing[i] != 0) {
+				//console.log(i);
+				if(position +1!= pairing[i]  && position -1!=pairing[i] ) {
+					if(i < pairing[i]) {
+						//console.log(i+"+");
+						layer++;
+						//if(layer > layerMax) {
+							//addTen++;
+							//layerMin = layer
+						//}
+						//layer = layer + 10*addTen;
+					} else {
+						//console.log(i+"-");
+						if(count == 1) {
+							layer--;
+							//if
+							//layer = layer + 10*addTen;
+							count = 0;
+						}
+						count++;
+						//layer--;
+					}
+				}
+				position = pairing[i];
+			} else {
+				if (count == 1)
+				{
+					layer--;
+					count = 0;
+				}
+				position = -2;
+			}
+			layering[i] = layer;
+		}
+		//console.log(layering,"hey")
+		return layering;
+	}
+	
+	
+	var sequencesList = [];
+	var iterationNumber = 0;
+	
+	function getSequences() {
+		sequences_unformatted = document.getElementById('multSeq').value;
+		sequences_separated = sequences_unformatted.split('\n');
+		sequences_separated.forEach(function addToArray(e) {
+			if(e != '') {
+				sequencesList[sequencesList.length] = e;
+			}
+		});
+		console.log(sequencesList);
+		
+		inputMultSequences();
+	}
+	
+	function inputMultSequences() {
+		if(iterationNumber + 1 < sequencesList.length) {
+			var name = sequencesList[iterationNumber];
+			var sequence = sequencesList[iterationNumber + 1];
+			
+			var name_DOM = document.getElementById("jobName");
+			var sequence_DOM = document.getElementById("sequence");
+			name_DOM.value = name;
+			sequence_DOM.value = sequence;
+			iterationNumber = iterationNumber + 2;
+			resetFrame();	
+		}
+	}
+	
+	function newLineFormat() {	
+	var textAreas = document.getElementsByTagName('textarea');
+
+Array.prototype.forEach.call(textAreas, function(elem) {
+    elem.placeholder = elem.placeholder.replace(/\\n/g, '\n');
+});
+	}
+	</script>
+
+<body onLoad="newLineFormat()">
+	<!--<button onClick="testVals()">TEST VALUES</button><br>-->
+    <!--<button onClick="parseSequence()">PARSE SEQUENCE</button><br>-->
+    <h1>MFOLD STRUCTURE ANALYZER</h1>
+    <ul>
+    	<li>
+        <i>Multiple Sequences: (enter using fasta format)</i><br>
+        <textarea placeholder=">JP-101
+GGGACAGGGCTAGCCAAGACAATAAAGGAATTAGCGTGACTGGGTGCATAAAATGAGGCAAAGCTTCCG
+>JP-102
+GGGACAGGGCTAGCAGTGGCAAGTGTGTCACTATCACATGTGAAGAAGGCGAATGAGGCAAAGCTTCCG
+>JP-103
+GGGACAGGGCTAGCTTTCACCATGGACCTTTACGTACTGGCAATGATGACAAATGAGGCAAAGCTTCCG" rows="10" cols="75" name="multSeq" id="multSeq"></textarea>
+        </li><br>
+        <li>
+        <i>Job Name:</i>
+        <input type="text" name="jobName" id="jobName">
+        </li>
+        <li>
+        <i>Sequence:</i>
+        <input type="text" name="sequence" id="sequence" size="30">
+        </li>
+        <li>
+        <i>Temperature:</i>
+        <input type="text" name="temperature" id="temperature" size="4" value="37">
+        </li>
+        <li> 
+            <i>Ionic conditions:</i> [Na<sup>+</sup>]  
+            <input type="text" size="5" name="naconcentration" id="naconcentration" value="1.0"> [Mg<sup>++</sup>] 
+            <input type="text" size="5" name="mgconcentration" id="mgconcentration" value="0.0"><br>
+        </li>
+        <button onClick="resetFrame()">SUBMIT SINGLE SEQUENCE</button><br>
+        <button onClick="getSequences()">SUBMIT MULTIPLE SEQUENCES</button><br>
+        <div id="url">
+        </div>
+        <div id="test" style="display:none;">20 dG = -0.31 job_13 1 A 0 2 0 1 2 G 1 3 0 2 3 G 2 4 16 3 4 C 3 5 15 4 5 C 4 6 0 5 6 A 5 7 13 6 7 A 6 8 12 7 8 A 7 9 0 8 9 G 8 10 0 9 10 T 9 11 0 10 11 T 10 12 0 11 12 T 11 13 7 12 13 T 12 14 6 13 14 A 13 15 0 14 15 G 14 16 4 15 16 C 15 17 3 16 17 A 16 18 0 17 18 A 17 19 0 18 19 G 18 20 0 19 20 T 19 0 0 20 20 dG = 0.58 job_13 1 A 0 2 0 1 2 G 1 3 0 2 3 G 2 4 16 3 4 C 3 5 15 4 5 C 4 6 0 5 6 A 5 7 0 6 7 A 6 8 13 7 8 A 7 9 0 8 9 G 8 10 0 9 10 T 9 11 0 10 11 T 10 12 0 11 12 T 11 13 0 12 13 T 12 14 7 13 14 A 13 15 0 14 15 G 14 16 4 15 16 C 15 17 3 16 17 A 16 18 0 17 18 A 17 19 0 18 19 G 18 20 0 19 20 T 19 0 0 20</div>
+        <div id="ctfile" style="display:none;">69 dG = -2.57 16May17-02-01-46 1 G 0 2 0 1 2 G 1 3 0 2 3 G 2 4 0 3 4 A 3 5 0 4 5 C 4 6 0 5 6 A 5 7 0 6 7 G 6 8 0 7 8 G 7 9 0 8 9 G 8 10 0 9 10 C 9 11 0 10 11 T 10 12 0 11 12 A 11 13 0 12 13 G 12 14 0 13 14 C 13 15 0 14 15 A 14 16 0 15 16 T 15 17 0 16 17 G 16 18 0 17 18 G 17 19 0 18 19 C 18 20 69 19 20 G 19 21 68 20 21 G 20 22 67 21 22 C 21 23 0 22 23 A 22 24 66 23 24 A 23 25 65 24 25 G 24 26 64 25 26 G 25 27 0 26 27 T 26 28 62 27 28 T 27 29 61 28 29 A 28 30 0 29 30 T 29 31 0 30 31 A 30 32 0 31 32 C 31 33 57 32 33 T 32 34 56 33 34 C 33 35 55 34 35 A 34 36 0 35 36 A 35 37 0 36 37 A 36 38 53 37 38 C 37 39 52 38 39 A 38 40 0 39 40 G 39 41 0 40 41 A 40 42 0 41 42 A 41 43 0 42 43 C 42 44 0 43 44 G 43 45 0 44 45 G 44 46 0 45 46 C 45 47 0 46 47 T 46 48 0 47 48 C 47 49 0 48 49 A 48 50 0 49 50 G 49 51 0 50 51 G 50 52 0 51 52 G 51 53 38 52 53 T 52 54 37 53 54 A 53 55 0 54 55 G 54 56 34 55 56 A 55 57 33 56 57 G 56 58 32 57 58 G 57 59 0 58 59 C 58 60 0 59 60 A 59 61 0 60 61 A 60 62 28 61 62 A 61 63 27 62 63 G 62 64 0 63 64 C 63 65 25 64 65 T 64 66 24 65 66 T 65 67 23 66 67 C 66 68 21 67 68 C 67 69 20 68 69 G 68 0 19 69 69 dG = -1.57 16May17-02-01-46 1 G 0 2 0 1 2 G 1 3 0 2 3 G 2 4 0 3 4 A 3 5 0 4 5 C 4 6 0 5 6 A 5 7 0 6 7 G 6 8 0 7 8 G 7 9 27 8 9 G 8 10 0 9 10 C 9 11 25 10 11 T 10 12 24 11 12 A 11 13 0 12 13 G 12 14 22 13 14 C 13 15 21 14 15 A 14 16 0 15 16 T 15 17 0 16 17 G 16 18 0 17 18 G 17 19 0 18 19 C 18 20 0 19 20 G 19 21 0 20 21 G 20 22 14 21 22 C 21 23 13 22 23 A 22 24 0 23 24 A 23 25 11 24 25 G 24 26 10 25 26 G 25 27 0 26 27 T 26 28 8 27 28 T 27 29 0 28 29 A 28 30 0 29 30 T 29 31 0 30 31 A 30 32 0 31 32 C 31 33 40 32 33 T 32 34 39 33 34 C 33 35 0 34 35 A 34 36 0 35 36 A 35 37 0 36 37 A 36 38 0 37 38 C 37 39 0 38 39 A 38 40 33 39 40 G 39 41 32 40 41 A 40 42 0 41 42 A 41 43 0 42 43 C 42 44 0 43 44 G 43 45 0 44 45 G 44 46 0 45 46 C 45 47 57 46 47 T 46 48 56 47 48 C 47 49 55 48 49 A 48 50 0 49 50 G 49 51 0 50 51 G 50 52 0 51 52 G 51 53 0 52 53 T 52 54 0 53 54 A 53 55 0 54 55 G 54 56 48 55 56 A 55 57 47 56 57 G 56 58 46 57 58 G 57 59 0 58 59 C 58 60 0 59 60 A 59 61 0 60 61 A 60 62 0 61 62 A 61 63 0 62 63 G 62 64 0 63 64 C 63 65 0 64 65 T 64 66 0 65 66 T 65 67 0 66 67 C 66 68 0 67 68 C 67 69 0 68 69 G 68 0 0 69 </div>
+        <br>
+        <div id="parsed">
+        </div>
+    </ul>
+   
+    
+		<div style="display:none;">
+			<button onClick="getElement()">getDiv</button>
+			<button onClick="changeFrame1()">changeFrame</button>
+			<iframe name="frametest" id="frametest" src="http://yeshymanoharan.com/mfold/iframe_page.php" width="500px" height="500px" onLoad="changeFrame();"></iframe>
+		</div>
+	</body>
+</html>

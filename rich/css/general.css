@@ -1,0 +1,142 @@
+/* CSS Document */
+body {
+	width: 100%;
+    /* height: 100%; */
+    background: #111;
+}
+section {
+    width: 80%;
+    height: 200px;
+    background: aqua;
+    margin: auto;
+    padding: 10px;
+}
+div#one {
+    
+    float: left;
+    width: 50%;
+    font-size: 12pt;
+    margin: 0 0 0 -5%;
+    border: 3px solid #aaa;
+    padding: 10.5px 21px;
+    background: rgba(240,240,240,.25);
+}
+div#two {
+        margin-left: 55%;
+    width: 50%;
+    font-size: 12pt;
+    /* margin: 0 0 0 25%; */
+    border: 3px solid #aaa;
+    padding: 10.5px 21px;
+    background: rgba(240,240,240,.25);
+}
+div#three {
+    width: 50%;
+    font-size: 12pt;
+    margin: 0 0 0 25%;
+    border: 3px solid #aaa;
+    padding: 10.5px 21px;
+    background: rgba(240,240,240,.25);
+}
+div#two:hover {
+        
+    background: #aaa;
+}
+div#one:hover {
+        
+    background: #aaa;
+}
+div#three:hover {
+        
+    background: #aaa;
+}
+h2 {
+	color: white;
+}
+p {
+	color: #a3d39c;
+}
+#containertext {
+	
+	max-width: 66em;
+	margin: 0 auto;
+	padding: 0 1em 1.875em;
+	display: block;
+	
+}
+label {
+	color:white;
+}
+#buttons {
+	width:50%;font-size:12pt;margin:0 0 0 25%;
+}
+#header1 {
+	width:100%;font-size:12pt;margin:0 0 0 0;
+}
+
+.title {
+	color: green;
+	text-align:center;
+	font-size:255px;
+}
+#boop1{
+	float:left;
+	width: 60px;
+}
+#boop2{margin-left: 60px
+}
+#hey {
+	width:50%;
+	font-size:12pt;
+	margin:0 0 0 25%;
+	border: 3px solid #a3d39c;
+	padding: 10.5px 21px;
+   background: rgba(240,240,240,.25);
+   /*background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+   background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+   background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+   background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+   background: -o-linear-gradient(top, #3e779d, #65a9d7);
+   padding: 10.5px 21px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;*/
+   font-size: 14px;
+   font-family: Helvetica, Arial, Sans-Serif;
+   text-align:center;
+   
+}
+#hey:hover {
+	opacity:.25;
+   background: #a3d39c;
+   color: white;
+   }
+a {
+	color:white;
+}
+body{
+	
+}
+
+@media screen and (max-width: 1075px) {
+.title {
+	color: green;
+	font-size:23vw;
+	text-align:center;
+}	
+}
+@media screen and (max-width: 55em) {
+	  #buttons{
+/*width:100%;font-size:12pt;margin:0 0 0 0;*/
+	  }
+	  #header1 {
+	width:100%;font-size:12pt;margin:0 0 0 0;
+}
+}
+
+

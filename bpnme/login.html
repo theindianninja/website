@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>BPnME</title>
+</head>
+
+<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDmJ2HvF8THUUpUJXUKZplgZ4QVtb0Jux8",
+    authDomain: "adherencesurvey.firebaseapp.com",
+    databaseURL: "https://adherencesurvey.firebaseio.com",
+    storageBucket: "adherencesurvey.appspot.com",
+    messagingSenderId: "234788813175"
+  };
+  var app = firebase.initializeApp(config);
+</script>
+
+<script>
+app.auth().onAuthStateChanged(function(user) {
+  if (user) {
+	// User is signed in.
+	// Check to see if user is administrative in database
+    window.location.href = "excel.html";
+  } else {
+    // No user is signed in.
+	// if window.location isn't login, set it to login.
+  }
+});
+</script>
+
+<script>
+function submitForm() {
+	var username = document.getElementById("username");
+	var password = document.getElementById("password");
+	console.log(username.value);
+	console.log(password.value);
+	console.log("hey");
+}
+</script>
+
+<body>
+Username: <input type="text" id="username" />
+Password: <input type="password" id="password" />
+<button onclick="submitForm()">Submit</button>
+</body>
+</html>

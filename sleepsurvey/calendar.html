@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calendar - SS</title>
+<meta name="description" content="This is Yeshwant Manoharan's project portfolio">
+<meta name="author" content="Yeshy Manoharan" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" media="screen" href="../css/particles.css">
+<link rel="stylesheet" type="text/css" href="../css/general.css" />
+<link rel="stylesheet" type="text/css" href="../css/gallery.css" />
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+<script src="../js/modernizr.custom.js"></script>
+<script src='calendar.js'></script>
+<style>
+h2 {
+	color: white;
+}
+p {
+	color: white;
+}
+#containertext {
+	
+	max-width: 66em;
+	margin: 0 auto;
+	padding: 0 1em 1.875em;
+	display: block;
+	
+}
+label {
+	color:white;
+}
+
+#calendar-grid {
+	width: 100%;
+	margin: 0 0 0 0;
+	
+}
+
+table {
+	border:1px solid black;
+}
+
+canvas {
+	position: relative;
+}
+#hey {
+	width:50%;font-size:12pt;margin:0 0 0 25%;
+	border-top: 1px solid #96d1f8;
+   background: #65a9d7;
+   background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+   background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+   background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+   background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+   background: -o-linear-gradient(top, #3e779d, #65a9d7);
+   padding: 10.5px 21px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 14px;
+   font-family: Helvetica, Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   text-align:center;
+}
+#hey:hover {
+	border-top-color: #28597a;
+   background: #28597a;
+   color: #ccc;
+   }
+a {
+	color:white;
+}
+body{
+	background-image:url(http://www.industrialthemes.com/made/wp-content/themes/made/images/backgrounds/bg-blur-26.jpg);
+}
+</style>
+</head>
+<body>
+<script>
+
+	</script>
+  
+  <div class="container">
+    <header class="clearfix"> <span>Projects</span>
+      <h1>Yeshy Manoharan</h1>
+    </header>
+    <div id="containertext">
+      <h2>Your Sleep Schedule</h2>
+      <p>This is the amount of sleep you've been getting this past week. The blue bar indicates the amount of time you've slept, and the red indicates your productivity. The point of this is to be able to better manage your sleep schedule. We recover from lack of sleep; what if it's possible to prepare in advance for lack of sleep. The idea here is that when you've inputted enough data, it will match your probable future sleep schedule to n-grams (of sorts I really didn't know what to call it) that match. So it checks for 1 day in the past, then checks for two days, and so on.</p><br><br>
+      <div id="calendar-grid">
+      	<canvas id="canvas"></canvas>
+      </div>
+      <br>
+      <br>
+      <a href="sleepsurvey.html"><div id ="hey"><p>View Sleep Form</p></div></a><br>
+    </div>
+  </div>
+
+</body>
+<script>
+var canvas = document.getElementById("canvas");
+var parent = document.getElementById("calendar-grid");
+console.log(canvas);
+canvas.width = parent.offsetWidth;
+canvas.height = parent.offsetHeight;
+</script>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>NFC Inventory</title>
+</head>
+<link rel="stylesheet" media="screen" href="../css/particles.css">
+<link rel="stylesheet" type="text/css" href="../css/general.css" />
+<link rel="stylesheet" type="text/css" href="../css/gallery.css" />
+<style>
+a{
+	color:white;
+}
+#containertext {
+	max-width: 66em;
+	margin: 0 10vw;
+	padding: 0 1em 1.875em;
+	display: block;	
+	color:white;
+}
+#gradebox {
+	width: 100%;
+	background-color:white;
+	opacity:50%;
+	height:109px;
+	transition: height .5s ease;
+}
+#gradebox:hover {
+	width:100%;
+	background-color:white;
+	height:auto;
+	
+}
+iframe {
+    width:100%;
+	height:90%;
+	transition:height .5s ease;
+}
+iframe:hover {
+	width:100%;
+	height:100%;
+}
+	
+	
+
+</style>
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+<script>
+var ref = new Firebase("https://nfcinventory.firebaseio.com/weapons");
+// Attach an asynchronous callback to read the data at our posts reference
+ref.on("value", function(snapshot) {
+	document.getElementById("data").innerHTML = "";
+	snapshot.forEach(function hey(element, index, array) {
+		var obj = element.val();
+		var i=0;
+		var currentDiv = document.createElement("div");
+		currentDiv.id = "user";
+		for (var key in obj) {
+  			console.log(key);
+			console.log(obj[Object.keys(obj)[i]]);
+			var newQuestion = document.createElement("div"); 
+ 			var question = document.createTextNode(key+": ");
+			
+			var answer = document.createTextNode(obj[Object.keys(obj)[i]]+"\n");
+			newQuestion.appendChild(question);
+			newQuestion.appendChild(answer);
+			var currentDiv1 = document.getElementById("data");
+			
+			currentDiv.appendChild(newQuestion);
+			
+			i++;
+		}
+		var newQuestion = document.createElement("div"); 
+		var ha = document.createTextNode("---------");
+		newQuestion.appendChild(ha);
+		currentDiv.appendChild(newQuestion);
+		currentDiv1.appendChild(currentDiv);
+		console.log(document.getElementById("data"));
+		/*console.log(obj[Object.keys(obj)[0]]);
+		element.forEach(function hey1(element, index, array) {
+			console.log(element.val());
+		});*/
+	});
+  //console.log(snapshot.val());
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+</script>
+<body style="background-image:url('vertical_cloth.png');">
+	<div class="container" >
+  		
+  		<div id="containertext">
+        	<br>
+            <h3>DATABASE:</h3>
+            <p>----------</p>
+        	<div id="data">
+            </div>
+  		</div>
+  	</div>  
+</body>
+</html>

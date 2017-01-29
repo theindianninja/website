@@ -1,0 +1,105 @@
+<head>
+<meta charset="utf-8">
+<title>Yeshy Manoharan</title>
+<meta name="description" content="This is Yeshwant Manoharan's project portfolio">
+<meta name="author" content="Yeshy Manoharan" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" media="screen" href="../css/particles.css">
+<link rel="stylesheet" type="text/css" href="../css/general.css" />
+<link rel="stylesheet" type="text/css" href="../css/gallery.css" />
+<script src="js/modernizr.custom.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+</head>
+<style>
+a{
+	color:white;
+}
+#containertext {
+	max-width: 66em;
+	margin: 0 10vw;
+	padding: 0 1em 1.875em;
+	display: block;	
+	color:white;
+}
+#gradebox {
+	width: 100%;
+	background-color:white;
+	opacity:50%;
+	height:109px;
+	transition: height .5s ease;
+}
+#gradebox:hover {
+	width:100%;
+	background-color:white;
+	height:auto;
+	
+}
+iframe {
+    width:100%;
+	height:90%;
+	transition:height .5s ease;
+}
+iframe:hover {
+	width:100%;
+	height:100%;
+}
+	
+	
+
+</style>
+
+<script>
+
+var ref = new Firebase("https://healthsurvey1.firebaseio.com/survey/answers/");
+// Attach an asynchronous callback to read the data at our posts reference
+ref.on("value", function(snapshot) {
+	snapshot.forEach(function hey(element, index, array) {
+		var obj = element.val();
+		var i=0;
+		var currentDiv = document.createElement("div");
+		currentDiv.id = "user";
+		for (var key in obj) {
+  			console.log(key);
+			console.log(obj[Object.keys(obj)[i]]);
+			var newQuestion = document.createElement("div"); 
+ 			var question = document.createTextNode(key+": ");
+			
+			var answer = document.createTextNode(obj[Object.keys(obj)[i]]+"\n");
+			newQuestion.appendChild(question);
+			newQuestion.appendChild(answer);
+			var currentDiv1 = document.getElementById("data");
+			
+			currentDiv.appendChild(newQuestion);
+			
+			i++;
+		}
+		var newQuestion = document.createElement("div"); 
+		var ha = document.createTextNode("---------");
+		newQuestion.appendChild(ha);
+		currentDiv.appendChild(newQuestion);
+		currentDiv1.appendChild(currentDiv);
+		console.log(document.getElementById("data"));
+		/*console.log(obj[Object.keys(obj)[0]]);
+		element.forEach(function hey1(element, index, array) {
+			console.log(element.val());
+		});*/
+	});
+  //console.log(snapshot.val());
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+</script>
+<body style="background-image:url('vertical_cloth.png');">
+	<div class="container" >
+  		<header class="clearfix"> <span>Projects</span>
+    		<h1>Yeshy Manoharan</h1>
+  		</header>
+  		<div id="containertext">
+        	<h3>We've created a survey app that's supposed to help us find innovative ways to get patients adhere to their medication. The link to the GitHub page can be found here:<a href="https://github.com/theindianninja/BMESurveyApp"> GITHUB LINK </a></h3><br>
+            <h3>LOGGED RESULTS:</h3>
+            <p>----------</p>
+        	<div id="data">
+            </div>
+  		</div>
+  	</div>  
+</body>
